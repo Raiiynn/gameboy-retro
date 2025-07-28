@@ -34,6 +34,89 @@
     letter-spacing: 0.05em;
   }
 
+  /* MISSING CLASSES - TAMBAHAN BARU */
+  .font-pixel {
+    font-family: var(--font-press-start), monospace;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+  }
+
+  .retro-green {
+    color: #00ff41;
+  }
+
+  .retro-yellow {
+    color: #ffff00;
+  }
+
+  .retro-blue {
+    color: #0080ff;
+  }
+
+  .retro-red {
+    color: #ff4444;
+  }
+
+  .retro-dark {
+    color: #001100;
+  }
+
+  .bg-retro-green {
+    background-color: #00ff41;
+  }
+
+  .bg-retro-yellow {
+    background-color: #ffff00;
+  }
+
+  .bg-retro-blue {
+    background-color: #0080ff;
+  }
+
+  .bg-retro-red {
+    background-color: #ff4444;
+  }
+
+  .bg-retro-dark {
+    background-color: #001100;
+  }
+
+  .border-retro-yellow {
+    border-color: #ffff00;
+  }
+
+  .border-retro-green {
+    border-color: #00ff41;
+  }
+
+  .border-retro-blue {
+    border-color: #0080ff;
+  }
+
+  .border-retro-red {
+    border-color: #ff4444;
+  }
+
+  .text-retro-green {
+    color: #00ff41;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+  }
+
+  .text-retro-yellow {
+    color: #ffff00;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+  }
+
+  .text-retro-blue {
+    color: #0080ff;
+    text-shadow: 0 0 5px rgba(0, 128, 255, 0.5);
+  }
+
+  .text-retro-red {
+    color: #ff4444;
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+  }
+
   .pixelated {
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
@@ -72,7 +155,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   }
 
-  /* Game Boy Container - NEW */
+  /* Game Boy Container */
   .gameboy-container {
     background: #000000;
     border: 4px solid #ffd700;
@@ -84,7 +167,7 @@
     position: relative;
   }
 
-  /* Screen Header - NEW */
+  /* Screen Header */
   .screen-header {
     text-align: center;
     margin-bottom: 15px;
@@ -97,7 +180,7 @@
     letter-spacing: 2px;
   }
 
-  /* Game Info Display (for Tetris) - NEW */
+  /* Game Info Display (for Tetris) */
   .game-info {
     display: flex;
     justify-content: space-between;
@@ -112,7 +195,7 @@
     text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
   }
 
-  /* Main Screen Area - NEW */
+  /* Main Screen Area */
   .screen-area {
     background: #2d3748;
     border: 2px solid #4a5568;
@@ -123,7 +206,7 @@
     position: relative;
   }
 
-  /* Tetris Grid - NEW */
+  /* Tetris Grid */
   .tetris-grid {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -146,7 +229,7 @@
     box-shadow: inset 0 0 3px rgba(0, 255, 65, 0.8);
   }
 
-  /* Birthday Screen Styles - NEW */
+  /* Birthday Screen Styles */
   .birthday-title {
     color: #00ff41;
     font-size: 18px;
@@ -164,7 +247,7 @@
     position: relative;
   }
 
-  /* Music Player Styles - NEW */
+  /* Music Player Styles */
   .album-art-container {
     background: #4a5568;
     border: 2px solid #718096;
@@ -221,7 +304,7 @@
     text-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
   }
 
-  /* Progress Bar - NEW */
+  /* Progress Bar */
   .progress-container {
     margin-bottom: 15px;
   }
@@ -251,7 +334,7 @@
     box-shadow: 0 0 8px rgba(49, 130, 206, 0.6);
   }
 
-  /* Volume Control - NEW */
+  /* Volume Control */
   .volume-container {
     display: flex;
     align-items: center;
@@ -273,7 +356,7 @@
     color: #00ff41;
   }
 
-  /* Control Buttons - NEW */
+  /* Control Buttons */
   .controls-container {
     display: flex;
     justify-content: center;
@@ -310,7 +393,7 @@
     cursor: not-allowed;
   }
 
-  /* Rotate Buttons (for Tetris) - NEW */
+  /* Rotate Buttons (for Tetris) */
   .rotate-controls {
     display: flex;
     justify-content: center;
@@ -334,7 +417,7 @@
     background: #2c5282;
   }
 
-  /* Playlist Container - NEW */
+  /* Playlist Container */
   .playlist-container {
     background: #2d3748;
     border: 2px solid #4a5568;
@@ -434,7 +517,7 @@
     margin-left: 8px;
   }
 
-  /* Message Screen - NEW */
+  /* Message Screen */
   .message-container {
     background: #2d3748;
     border: 2px solid #4a5568;
@@ -470,7 +553,7 @@
     white-space: pre-wrap;
   }
 
-  /* Action Buttons - NEW */
+  /* Action Buttons */
   .action-buttons {
     display: flex;
     flex-direction: column;
@@ -522,7 +605,7 @@
     box-shadow: 0 2px 0 #e53e3e, 0 3px 4px rgba(0, 0, 0, 0.3);
   }
 
-  /* Instructions - NEW */
+  /* Instructions */
   .instructions {
     background: #2d3748;
     border: 2px solid #4a5568;
@@ -538,7 +621,7 @@
     text-shadow: 0 0 3px rgba(0, 255, 65, 0.3);
   }
 
-  /* D-Pad Styling - NEW */
+  /* D-Pad Styling */
   .dpad {
     position: relative;
     width: 60px;
@@ -567,7 +650,7 @@
     border-radius: 2px;
   }
 
-  /* Action Buttons (A, B) - NEW */
+  /* Action Buttons (A, B) */
   .action-button {
     width: 40px;
     height: 40px;
@@ -603,7 +686,7 @@
     box-shadow: 0 4px 0 #cc3333, 0 6px 8px rgba(0, 0, 0, 0.3);
   }
 
-  /* Control Buttons (SELECT, START) - NEW */
+  /* Control Buttons (SELECT, START) */
   .control-button {
     background: #666;
     color: white;
@@ -627,7 +710,7 @@
     box-shadow: 0 1px 0 #333, 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  /* Speaker Grille - NEW */
+  /* Speaker Grille */
   .speaker-grille {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -642,7 +725,7 @@
     border-radius: 50%;
   }
 
-  /* Power/Battery Indicators - NEW */
+  /* Power/Battery Indicators */
   .indicator {
     width: 8px;
     height: 8px;
@@ -656,7 +739,7 @@
     box-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
   }
 
-  /* Windows Activation Watermark - NEW */
+  /* Windows Activation Watermark */
   .windows-watermark {
     position: fixed;
     bottom: 20px;
@@ -666,17 +749,6 @@
     text-align: right;
     pointer-events: none;
     z-index: 1000;
-  }
-
-  /* Retro Colors */
-  .retro-text-green {
-    color: #00ff41;
-    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-  }
-
-  .retro-text-yellow {
-    color: #ffff00;
-    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
   }
 
   .retro-text-shadow {
@@ -714,7 +786,7 @@
     cursor: pointer !important;
   }
 
-  /* Animations - NEW */
+  /* Animations */
   @keyframes blink {
     0%,
     50% {
@@ -744,7 +816,7 @@
     animation: glow 2s ease-in-out infinite;
   }
 
-  /* Responsive Design - NEW */
+  /* Responsive Design */
   @media (max-width: 480px) {
     .gameboy-container {
       max-width: 350px;
@@ -799,6 +871,14 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
     --font-press-start: "Press Start 2P";
+
+    /* Retro Color Variables */
+    --retro-green: #00ff41;
+    --retro-yellow: #ffff00;
+    --retro-blue: #0080ff;
+    --retro-red: #ff4444;
+    --retro-dark: #001100;
+    --retro-gray: #333333;
   }
 
   .dark {
