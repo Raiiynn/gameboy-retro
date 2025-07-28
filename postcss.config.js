@@ -1,6 +1,7 @@
 module.exports = {
   plugins: {
-    '@tailwindcss/postcss': {},    // ← ganti dari 'tailwindcss'
+    // Ganti 'tailwindcss' ke '@tailwindcss/postcss'
+    '@tailwindcss/postcss': {},  
     autoprefixer: {},
   },
 }
