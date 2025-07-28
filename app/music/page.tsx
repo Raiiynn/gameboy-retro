@@ -22,28 +22,28 @@ export default function MusicPage() {
       artist: "Gorillaz",
       duration: "3:53",
       url: "/music/OnMelancholyHill.mp3",
-      thumbnail: "/thumbnail/OnMelancholyHill.jpg",
+      thumbnail: "/thumbnail/melancholy.jpg",
     },
     {
       title: "Endlessly",
       artist: "Bixby",
       duration: "2:05",
       url: "/music/endlessly.mp3",
-      thumbnail: "/thumbnail/Endlessly.jpg",
+      thumbnail: "/thumbnail/endlessly.jpg",
     },
     {
       title: "Selalu Ada",
       artist: "Jumbo",
       duration: "2:56",
       url: "/music/SelaluAda.mp3",
-      thumbnail: "/thumbnail/SelaluAda.jpg",
+      thumbnail: "/thumbnail/jumbo.jpg",
     },
     {
       title: "Pergi Makan",
       artist: "Sal Priadi",
       duration: "3:31",
       url: "/music/PergiMakan.mp3",
-      thumbnail: "/thumbnail/PergiMakan.jpg",
+      thumbnail: "/thumbnail/makan.jpg",
     },
     {
       title: "Wonderwall",
@@ -55,10 +55,18 @@ export default function MusicPage() {
   ]
 
   useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
+    const audio = audioRef.current;
+    if (!audio) return;
 
-    const updateTime = () => setCurrentTime(audio.currentTime)
+// <<< TAMBAHKAN BLOK INI >>>
+// Setel sumber audio setiap kali lagu berubah
+if (audio.src !== playlist[currentTrack].url) {
+  audio.src = playlist[currentTrack].url;
+  audio.load(); // Perintahkan untuk memuat file baru
+}
+// <<< AKHIR BLOK TAMBAHAN >>>
+
+const updateTime = () => setCurrentTime(audio.currentTime)
     const updateDuration = () => {
       if (audio.duration && !isNaN(audio.duration)) {
         setDuration(audio.duration)
@@ -141,33 +149,24 @@ export default function MusicPage() {
   }
 
   const playTrack = async (index: number) => {
-    if (index === currentTrack && isPlaying) {
-      togglePlay()
-      return
-    }
-
-    setCurrentTrack(index)
-    setCurrentTime(0)
-    setAudioError(false)
-
-    setTimeout(async () => {
-      const audio = audioRef.current
-      if (audio) {
-        try {
-          setIsLoading(true)
-          audio.load()
-          await audio.play()
-          setIsPlaying(true)
-          setIsLoading(false)
-        } catch (error) {
-          console.error("Error playing track:", error)
-          setIsLoading(false)
-          setIsPlaying(false)
-          setAudioError(true)
-        }
-      }
-    }, 100)
+  if (index === currentTrack && isPlaying) {
+    togglePlay();
+    return;
   }
+
+  setCurrentTrack(index); // Cukup ubah state, useEffect akan bekerja
+  setCurrentTime(0);
+  setAudioError(false);
+  
+  // Timeout bisa dihilangkan atau dikurangi, biarkan useEffect yang bekerja
+  setTimeout(() => {
+    audioRef.current?.play().catch(error => {
+      console.error("Gagal memutar trek:", error);
+      setAudioError(true);
+      setIsPlaying(false);
+    });
+  }, 50); // Penundaan kecil untuk memberi waktu audio memuat
+};
 
   const nextTrack = () => {
     const nextIndex = (currentTrack + 1) % playlist.length
@@ -505,7 +504,7 @@ export default function MusicPage() {
         </button>
 
         {/* Hidden Audio Element */}
-        <audio ref={audioRef} src={playlist[currentTrack].url} preload="metadata" crossOrigin="anonymous" />
+        <audio ref={audioRef} preload="metadata" crossOrigin="anonymous" />
       </div>
     </div>
   )
