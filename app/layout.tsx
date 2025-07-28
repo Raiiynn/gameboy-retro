@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Press_Start_2P } from "next/font/google"
 import './globals.css'
+import { MusicProvider } from "./contexts/MusicContext";
 
 const pressStart2P = Press_Start_2P({
   weight: "400",
@@ -22,7 +23,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${pressStart2P.variable} antialiased`}>{children}</body>
+      <body className={`${pressStart2P.variable} antialiased`}>
+        {/* 👇 Tambahkan MusicProvider di sini untuk membungkus children */}
+        <MusicProvider>
+          {children}
+        </MusicProvider>
+      </body>
     </html>
   )
 }
