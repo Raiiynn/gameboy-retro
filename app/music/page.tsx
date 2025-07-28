@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX } from "lucide-react"
+import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
 
 export default function MusicPage() {
   const router = useRouter()
@@ -12,46 +12,40 @@ export default function MusicPage() {
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [currentTrack, setCurrentTrack] = useState(0)
-  const [volume, setVolume] = useState(0.7)
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [audioError, setAudioError] = useState(false)
 
   // Playlist sesuai dengan file musik yang ada
   const playlist = [
     {
-      title: "Selalu Ada",
-      artist: "Jumbo",
-      duration: "2:56",
+      title: "On Bended Knee",
+      artist: "Boyz II Men",
+      duration: "5:20",
+      url: "/music/OnMelancholyHill.mp3",
+    },
+    {
+      title: "(Everything I Do) I Do It For You",
+      artist: "Bryan Adams",
+      duration: "6:32",
+      url: "/music/endlessly.mp3",
+    },
+    {
+      title: "Just the Two of Us",
+      artist: "Bill Withers",
+      duration: "7:18",
       url: "/music/SelaluAda.mp3",
-      thumbnail: "/thumbnail/SelaluAda.jpg",
     },
     {
-      title: "On Melancholy Hill",
-      artist: "Plastic Beach",
-      duration: "3:54",
-      url: "/music/OnMelancholyHill.mp3", 
-      thumbnail: "/thumbnail/OnMelancholyHill.jpg",
+      title: "Nothing's Gonna Change My Love For You",
+      artist: "George Benson",
+      duration: "3:52",
+      url: "/music/PergiMakan.mp3",
     },
     {
-      title: "Besok Kita Pergi Makan",
-      artist: "Sal Priadi",
-      duration: "3:31",
-      url: "/music/PergiMakan.mp3", // Sample audio
-      thumbnail: "/thumbnail/PergiMakan.jpg",
-    },
-    {
-      title: "Wonderwall",
-      artist: "Oasis",
-      duration: "4:18",
-      url: "/music/Wonderwall.mp3", // Sample audio
-      thumbnail: "/thumbnail/Wonderwall.jpg",
-    },
-    {
-      title: "Endlessly",
-      artist: "bixby",
-      duration: "2:06",
-      url: "/music/endlessly.mp3", // Sample audio
-      thumbnail: "/thumbnail/endlessly.jpg",
+      title: "How Deep Is Your Love",
+      artist: "Bee Gees",
+      duration: "3:58",
+      url: "/music/Wonderwall.mp3",
     },
   ]
 
@@ -67,17 +61,36 @@ export default function MusicPage() {
     }
     const handleEnded = () => {
       setIsPlaying(false)
-      nextTrack()
+      const nextIndex = (currentTrack + 1) % playlist.length
+      setCurrentTrack(nextIndex)
+      setCurrentTime(0)
+
+      setTimeout(async () => {
+        if (audio) {
+          try {
+            setIsLoading(true)
+            audio.load()
+            await audio.play()
+            setIsPlaying(true)
+            setIsLoading(false)
+          } catch (error) {
+            console.error("Error playing next track:", error)
+            setIsLoading(false)
+            setIsPlaying(false)
+            setAudioError(true)
+          }
+        }
+      }, 100)
     }
     const handleLoadStart = () => setIsLoading(true)
     const handleCanPlay = () => {
       setIsLoading(false)
-      setError("")
+      setAudioError(false)
     }
     const handleError = () => {
       setIsLoading(false)
-      setError("Failed to load audio")
       setIsPlaying(false)
+      setAudioError(true)
     }
 
     audio.addEventListener("timeupdate", updateTime)
@@ -87,7 +100,7 @@ export default function MusicPage() {
     audio.addEventListener("canplay", handleCanPlay)
     audio.addEventListener("error", handleError)
 
-    audio.volume = volume
+    audio.volume = 0.7
 
     return () => {
       audio.removeEventListener("timeupdate", updateTime)
@@ -97,7 +110,7 @@ export default function MusicPage() {
       audio.removeEventListener("canplay", handleCanPlay)
       audio.removeEventListener("error", handleError)
     }
-  }, [currentTrack, volume])
+  }, [currentTrack, playlist.length])
 
   const togglePlay = async () => {
     const audio = audioRef.current
@@ -112,12 +125,13 @@ export default function MusicPage() {
         await audio.play()
         setIsPlaying(true)
         setIsLoading(false)
+        setAudioError(false)
       }
     } catch (error) {
       console.error("Error playing audio:", error)
-      setError("Cannot play audio")
       setIsLoading(false)
       setIsPlaying(false)
+      setAudioError(true)
     }
   }
 
@@ -129,7 +143,7 @@ export default function MusicPage() {
 
     setCurrentTrack(index)
     setCurrentTime(0)
-    setError("")
+    setAudioError(false)
 
     setTimeout(async () => {
       const audio = audioRef.current
@@ -142,9 +156,9 @@ export default function MusicPage() {
           setIsLoading(false)
         } catch (error) {
           console.error("Error playing track:", error)
-          setError("Cannot play this track")
           setIsLoading(false)
           setIsPlaying(false)
+          setAudioError(true)
         }
       }
     }, 100)
@@ -182,146 +196,116 @@ export default function MusicPage() {
 
   return (
     <div className="min-h-screen bg-purple-600 flex items-center justify-center p-4">
-      <div className="bg-retro-dark border-4 border-retro-yellow rounded-lg p-4 w-full max-w-sm shadow-2xl">
+      <div className="bg-black border-4 border-yellow-400 rounded-lg p-4 w-full max-w-sm shadow-2xl">
         {/* Header */}
         <div className="text-center mb-4">
-          <h1 className="text-retro-green font-press-start text-sm">Music Player</h1>
+          <h1 className="text-green-400 font-press-start text-sm">Music Player</h1>
         </div>
 
         {/* Album Art */}
-        <div className="bg-gray-800 border-2 border-gray-600 rounded p-2 mb-4">
-          <div className="bg-gray-700 h-32 rounded mb-2 overflow-hidden">
-            <img
-              src={playlist[currentTrack].thumbnail || "/placeholder.svg"}
-              alt={`${playlist[currentTrack].title} cover`}
-              className="w-full h-full object-cover pixelated"
-            />
+        <div className="bg-gray-700 border-2 border-gray-600 rounded p-3 mb-4">
+          <div className="bg-gray-600 h-24 rounded mb-3 flex items-center justify-center">
+            <div className="w-16 h-16 bg-gray-300 rounded flex items-center justify-center">
+              <span className="text-gray-500 text-xs">♪</span>
+            </div>
           </div>
           <div className="text-center">
-            <div className="text-retro-green font-press-start text-xs mb-1">{playlist[currentTrack].title}</div>
-            <div className="text-retro-yellow font-press-start text-xs">{playlist[currentTrack].artist}</div>
+            <div className="text-green-400 font-press-start text-xs mb-1">{playlist[currentTrack].title}</div>
+            <div className="text-green-400 font-press-start text-xs mb-1">{playlist[currentTrack].artist}</div>
+            {audioError && <div className="text-red-400 font-press-start text-xs">Failed to load audio</div>}
           </div>
+        </div>
+
+        {/* Time and Volume */}
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-green-400 font-press-start text-xs">{formatTime(currentTime)}</span>
+          <span className="text-green-400 font-press-start text-xs">
+            {duration ? formatTime(duration) : playlist[currentTrack].duration}
+          </span>
         </div>
 
         {/* Progress Bar */}
-        <div className="mb-4">
-          <div className="flex justify-between text-white font-press-start text-xs mb-1">
-            <span>{formatTime(currentTime)}</span>
-            <span>{duration ? formatTime(duration) : playlist[currentTrack].duration}</span>
-          </div>
-          <div className="bg-gray-700 h-2 rounded cursor-pointer" onClick={handleProgressClick}>
+        <div className="mb-3">
+          <div className="bg-gray-700 h-2 rounded cursor-pointer relative" onClick={handleProgressClick}>
             <div
-              className="bg-retro-blue h-full rounded transition-all duration-100"
+              className="bg-gray-400 h-full rounded transition-all duration-100"
               style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
+            />
+            <div
+              className="absolute top-1/2 w-3 h-3 bg-blue-500 rounded-full transform -translate-y-1/2 -translate-x-1/2"
+              style={{ left: `${duration ? (currentTime / duration) * 100 : 0}%` }}
             />
           </div>
         </div>
 
-        {/* Circular Controls */}
-        <div className="flex justify-center gap-4 mb-4">
-          <button
-            onClick={prevTrack}
-            className="w-12 h-12 bg-gray-600 hover:bg-gray-500 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
-            disabled={isLoading}
-          >
-            <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
-              <SkipBack size={12} className="text-gray-800" />
-            </div>
-          </button>
-
-          <button
-            onClick={togglePlay}
-            className="w-12 h-12 bg-gray-600 hover:bg-gray-500 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
-            disabled={isLoading}
-          >
-            <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-              {isLoading ? (
-                <div className="w-3 h-3 bg-gray-800 rounded-full animate-pulse" />
-              ) : isPlaying ? (
-                <Pause size={16} className="text-gray-800" />
-              ) : (
-                <Play size={16} className="text-gray-800 ml-0.5" />
-              )}
-            </div>
-          </button>
-
-          <button
-            onClick={nextTrack}
-            className="w-12 h-12 bg-gray-600 hover:bg-gray-500 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
-            disabled={isLoading}
-          >
-            <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
-              <SkipForward size={12} className="text-gray-800" />
-            </div>
-          </button>
+        {/* Volume Display */}
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-green-400 font-press-start text-xs">♪</span>
+          <div className="flex-1 mx-2 bg-gray-700 h-2 rounded">
+            <div className="bg-gray-400 h-full rounded" style={{ width: "70%" }} />
+          </div>
+          <span className="text-green-400 font-press-start text-xs">70%</span>
         </div>
 
-        {/* Blue Control Buttons */}
-        <div className="flex gap-2 mb-4">
+        {/* Controls */}
+        <div className="flex justify-center gap-2 mb-4">
           <button
             onClick={prevTrack}
-            className="flex-1 bg-retro-blue hover:bg-blue-600 text-white font-press-start text-xs py-2 px-2 rounded transition-colors disabled:opacity-50"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-press-start text-xs py-2 px-3 rounded transition-colors disabled:opacity-50"
             disabled={isLoading}
           >
             <SkipBack size={12} />
           </button>
           <button
             onClick={togglePlay}
-            className="flex-[2] bg-retro-blue hover:bg-blue-600 text-white font-press-start text-xs py-2 px-4 rounded transition-colors disabled:opacity-50"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-press-start text-xs py-2 px-4 rounded transition-colors disabled:opacity-50"
             disabled={isLoading}
           >
             {isLoading ? "..." : isPlaying ? <Pause size={16} /> : <Play size={16} />}
           </button>
           <button
             onClick={nextTrack}
-            className="flex-1 bg-retro-blue hover:bg-blue-600 text-white font-press-start text-xs py-2 px-2 rounded transition-colors disabled:opacity-50"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-press-start text-xs py-2 px-3 rounded transition-colors disabled:opacity-50"
             disabled={isLoading}
           >
             <SkipForward size={12} />
           </button>
         </div>
 
-        {/* Volume Control */}
-        <div className="flex items-center gap-2 mb-4">
-          <button className="text-retro-green">{volume > 0 ? <Volume2 size={12} /> : <VolumeX size={12} />}</button>
-        </div>
-
         {/* Playlist */}
-        <div className="bg-gray-800 border-2 border-gray-600 rounded p-2 mb-4">
-          <div className="text-retro-yellow font-press-start text-xs mb-2">PLAYLIST:</div>
-          <div className="bg-white rounded p-2 h-24 overflow-y-auto">
+        <div className="mb-4">
+          <div className="text-yellow-400 font-press-start text-xs mb-2">PLAYLIST:</div>
+          <div className="bg-black border border-gray-600 rounded p-2 h-32 overflow-y-scroll retro-scroll-playlist">
             {playlist.map((track, index) => (
               <div
                 key={index}
                 onClick={() => playTrack(index)}
-                className={`flex justify-between items-center text-xs cursor-pointer hover:bg-gray-100 p-1 rounded ${
-                  index === currentTrack ? "bg-gray-200 font-bold" : ""
+                className={`flex justify-between items-center text-xs cursor-pointer hover:bg-gray-800 p-1 rounded transition-colors mb-1 ${
+                  index === currentTrack ? "bg-gray-800" : ""
                 }`}
               >
-                <span className="text-black font-press-start text-xs">
+                <span className="text-green-400 font-press-start text-xs flex-1">
                   {index + 1}. {track.title}
                 </span>
-                <span className="text-gray-600 font-press-start text-xs">{track.duration}</span>
+                <span className="text-green-400 font-press-start text-xs ml-2">{track.duration}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="space-y-2">
-          <button
-            onClick={() => router.push("/?direct=true")}
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-press-start text-xs py-3 px-4 rounded transition-colors"
-          >
-            SELANJUTNYA
-          </button>
-          <button
-            onClick={() => router.back()}
-            className="w-full bg-retro-red hover:bg-red-600 text-white font-press-start text-xs py-3 px-4 rounded transition-colors"
-          >
-            KEMBALI
-          </button>
+        {/* Instructions */}
+        <div className="text-center mb-4">
+          <div className="text-green-400 font-press-start text-xs">Click play button or song title</div>
+          <div className="text-green-400 font-press-start text-xs">to start music</div>
         </div>
+
+        {/* Back Button - ✅ LANGSUNG KE GAMEBOY */}
+        <button
+          onClick={() => router.push("/?direct=true")}
+          className="w-full bg-green-500 hover:bg-green-600 text-white font-press-start text-xs py-3 px-4 rounded transition-colors"
+        >
+          SELANJUTNYA
+        </button>
 
         {/* Hidden Audio Element */}
         <audio ref={audioRef} src={playlist[currentTrack].url} preload="metadata" crossOrigin="anonymous" />
