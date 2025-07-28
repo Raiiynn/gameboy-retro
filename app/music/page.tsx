@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
+import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react"
 
 export default function MusicPage() {
   const router = useRouter()
@@ -15,37 +15,42 @@ export default function MusicPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [audioError, setAudioError] = useState(false)
 
-  // Playlist sesuai dengan file musik yang ada
+  // Playlist dengan thumbnail
   const playlist = [
     {
-      title: "On Bended Knee",
-      artist: "Boyz II Men",
-      duration: "5:20",
+      title: "On Melancholy Hill",
+      artist: "Gorillaz",
+      duration: "3:53",
       url: "/music/OnMelancholyHill.mp3",
+      thumbnail: "/thumbnail/OnMelancholyHill.jpg",
     },
     {
-      title: "(Everything I Do) I Do It For You",
-      artist: "Bryan Adams",
-      duration: "6:32",
+      title: "Endlessly",
+      artist: "Bixby",
+      duration: "2:05",
       url: "/music/endlessly.mp3",
+      thumbnail: "/thumbnail/Endlessly.jpg",
     },
     {
-      title: "Just the Two of Us",
-      artist: "Bill Withers",
-      duration: "7:18",
+      title: "Selalu Ada",
+      artist: "Jumbo",
+      duration: "2:56",
       url: "/music/SelaluAda.mp3",
+      thumbnail: "/thumbnail/SelaluAda.jpg",
     },
     {
-      title: "Nothing's Gonna Change My Love For You",
-      artist: "George Benson",
-      duration: "3:52",
+      title: "Pergi Makan",
+      artist: "Sal Priadi",
+      duration: "3:31",
       url: "/music/PergiMakan.mp3",
+      thumbnail: "/thumbnail/PergiMakan.jpg",
     },
     {
-      title: "How Deep Is Your Love",
-      artist: "Bee Gees",
-      duration: "3:58",
+      title: "Wonderwall",
+      artist: "Oasis",
+      duration: "4:18",
       url: "/music/Wonderwall.mp3",
+      thumbnail: "/thumbnail/Wonderwall.jpg",
     },
   ]
 
@@ -195,114 +200,306 @@ export default function MusicPage() {
   }
 
   return (
-    <div className="min-h-screen bg-purple-600 flex items-center justify-center p-4">
-      <div className="bg-black border-4 border-yellow-400 rounded-lg p-4 w-full max-w-sm shadow-2xl">
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#9333ea",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#000000",
+          border: "4px solid #fbbf24",
+          borderRadius: "8px",
+          padding: "16px",
+          width: "100%",
+          maxWidth: "384px",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+        }}
+      >
         {/* Header */}
-        <div className="text-center mb-4">
-          <h1 className="text-green-400 font-press-start text-sm">Music Player</h1>
+        <div style={{ textAlign: "center", marginBottom: "16px" }}>
+          <h1 style={{ color: "#4ade80", fontFamily: "var(--font-press-start), monospace", fontSize: "14px" }}>
+            Music Player
+          </h1>
         </div>
 
         {/* Album Art */}
-        <div className="bg-gray-700 border-2 border-gray-600 rounded p-3 mb-4">
-          <div className="bg-gray-600 h-24 rounded mb-3 flex items-center justify-center">
-            <div className="w-16 h-16 bg-gray-300 rounded flex items-center justify-center">
-              <span className="text-gray-500 text-xs">♪</span>
-            </div>
+        <div
+          style={{
+            backgroundColor: "#374151",
+            border: "2px solid #4b5563",
+            borderRadius: "6px",
+            padding: "12px",
+            marginBottom: "16px",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#4b5563",
+              height: "96px",
+              borderRadius: "4px",
+              marginBottom: "12px",
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={playlist[currentTrack].thumbnail || "/placeholder.svg"}
+              alt={`${playlist[currentTrack].title} thumbnail`}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
           </div>
-          <div className="text-center">
-            <div className="text-green-400 font-press-start text-xs mb-1">{playlist[currentTrack].title}</div>
-            <div className="text-green-400 font-press-start text-xs mb-1">{playlist[currentTrack].artist}</div>
-            {audioError && <div className="text-red-400 font-press-start text-xs">Failed to load audio</div>}
+          <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                color: "#4ade80",
+                fontFamily: "var(--font-press-start), monospace",
+                fontSize: "10px",
+                marginBottom: "4px",
+              }}
+            >
+              {playlist[currentTrack].title}
+            </div>
+            <div
+              style={{
+                color: "#4ade80",
+                fontFamily: "var(--font-press-start), monospace",
+                fontSize: "10px",
+                marginBottom: "4px",
+              }}
+            >
+              {playlist[currentTrack].artist}
+            </div>
+            {audioError && (
+              <div style={{ color: "#f87171", fontFamily: "var(--font-press-start), monospace", fontSize: "10px" }}>
+                Failed to load audio
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Time and Volume */}
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-green-400 font-press-start text-xs">{formatTime(currentTime)}</span>
-          <span className="text-green-400 font-press-start text-xs">
+        {/* Time Display */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+          <span style={{ color: "#4ade80", fontFamily: "var(--font-press-start), monospace", fontSize: "10px" }}>
+            {formatTime(currentTime)}
+          </span>
+          <span style={{ color: "#4ade80", fontFamily: "var(--font-press-start), monospace", fontSize: "10px" }}>
             {duration ? formatTime(duration) : playlist[currentTrack].duration}
           </span>
         </div>
 
         {/* Progress Bar */}
-        <div className="mb-3">
-          <div className="bg-gray-700 h-2 rounded cursor-pointer relative" onClick={handleProgressClick}>
+        <div style={{ marginBottom: "12px" }}>
+          <div
+            style={{
+              backgroundColor: "#374151",
+              height: "8px",
+              borderRadius: "4px",
+              cursor: "pointer",
+              position: "relative",
+            }}
+            onClick={handleProgressClick}
+          >
             <div
-              className="bg-gray-400 h-full rounded transition-all duration-100"
-              style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
+              style={{
+                backgroundColor: "#9ca3af",
+                height: "100%",
+                borderRadius: "4px",
+                transition: "width 0.1s ease",
+                width: `${duration ? (currentTime / duration) * 100 : 0}%`,
+              }}
             />
             <div
-              className="absolute top-1/2 w-3 h-3 bg-blue-500 rounded-full transform -translate-y-1/2 -translate-x-1/2"
-              style={{ left: `${duration ? (currentTime / duration) * 100 : 0}%` }}
+              style={{
+                position: "absolute",
+                top: "50%",
+                width: "12px",
+                height: "12px",
+                backgroundColor: "#3b82f6",
+                borderRadius: "50%",
+                transform: "translate(-50%, -50%)",
+                left: `${duration ? (currentTime / duration) * 100 : 0}%`,
+              }}
             />
           </div>
         </div>
 
         {/* Volume Display */}
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-green-400 font-press-start text-xs">♪</span>
-          <div className="flex-1 mx-2 bg-gray-700 h-2 rounded">
-            <div className="bg-gray-400 h-full rounded" style={{ width: "70%" }} />
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+          <Volume2 size={16} style={{ color: "#4ade80" }} />
+          <div
+            style={{
+              flex: 1,
+              marginLeft: "8px",
+              marginRight: "8px",
+              backgroundColor: "#374151",
+              height: "8px",
+              borderRadius: "4px",
+            }}
+          >
+            <div style={{ backgroundColor: "#9ca3af", height: "100%", borderRadius: "4px", width: "70%" }} />
           </div>
-          <span className="text-green-400 font-press-start text-xs">70%</span>
+          <span style={{ color: "#4ade80", fontFamily: "var(--font-press-start), monospace", fontSize: "10px" }}>
+            70%
+          </span>
         </div>
 
         {/* Controls */}
-        <div className="flex justify-center gap-2 mb-4">
+        <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "16px" }}>
           <button
             onClick={prevTrack}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-press-start text-xs py-2 px-3 rounded transition-colors disabled:opacity-50"
             disabled={isLoading}
+            style={{
+              backgroundColor: "#3b82f6",
+              color: "white",
+              fontFamily: "var(--font-press-start), monospace",
+              fontSize: "10px",
+              padding: "8px 12px",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              opacity: isLoading ? 0.5 : 1,
+            }}
           >
             <SkipBack size={12} />
           </button>
           <button
             onClick={togglePlay}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-press-start text-xs py-2 px-4 rounded transition-colors disabled:opacity-50"
             disabled={isLoading}
+            style={{
+              backgroundColor: "#3b82f6",
+              color: "white",
+              fontFamily: "var(--font-press-start), monospace",
+              fontSize: "10px",
+              padding: "8px 16px",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              opacity: isLoading ? 0.5 : 1,
+            }}
           >
             {isLoading ? "..." : isPlaying ? <Pause size={16} /> : <Play size={16} />}
           </button>
           <button
             onClick={nextTrack}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-press-start text-xs py-2 px-3 rounded transition-colors disabled:opacity-50"
             disabled={isLoading}
+            style={{
+              backgroundColor: "#3b82f6",
+              color: "white",
+              fontFamily: "var(--font-press-start), monospace",
+              fontSize: "10px",
+              padding: "8px 12px",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              opacity: isLoading ? 0.5 : 1,
+            }}
           >
             <SkipForward size={12} />
           </button>
         </div>
 
         {/* Playlist */}
-        <div className="mb-4">
-          <div className="text-yellow-400 font-press-start text-xs mb-2">PLAYLIST:</div>
-          <div className="bg-black border border-gray-600 rounded p-2 h-32 overflow-y-scroll retro-scroll-playlist">
+        <div style={{ marginBottom: "16px" }}>
+          <div
+            style={{
+              color: "#fbbf24",
+              fontFamily: "var(--font-press-start), monospace",
+              fontSize: "10px",
+              marginBottom: "8px",
+            }}
+          >
+            PLAYLIST:
+          </div>
+          <div
+            style={{
+              backgroundColor: "#000000",
+              border: "1px solid #4b5563",
+              borderRadius: "4px",
+              padding: "8px",
+              height: "128px",
+              overflowY: "auto",
+            }}
+          >
             {playlist.map((track, index) => (
               <div
                 key={index}
                 onClick={() => playTrack(index)}
-                className={`flex justify-between items-center text-xs cursor-pointer hover:bg-gray-800 p-1 rounded transition-colors mb-1 ${
-                  index === currentTrack ? "bg-gray-800" : ""
-                }`}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontSize: "10px",
+                  cursor: "pointer",
+                  padding: "4px",
+                  borderRadius: "4px",
+                  marginBottom: "4px",
+                  backgroundColor: index === currentTrack ? "#374151" : "transparent",
+                }}
               >
-                <span className="text-green-400 font-press-start text-xs flex-1">
-                  {index + 1}. {track.title}
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", flex: 1, minWidth: 0 }}>
+                  <img
+                    src={track.thumbnail || "/placeholder.svg"}
+                    alt={`${track.title} thumbnail`}
+                    style={{ width: "24px", height: "24px", borderRadius: "2px", objectFit: "cover", flexShrink: 0 }}
+                  />
+                  <span
+                    style={{
+                      color: "#4ade80",
+                      fontFamily: "var(--font-press-start), monospace",
+                      fontSize: "10px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {index + 1}. {track.title}
+                  </span>
+                </div>
+                <span
+                  style={{
+                    color: "#4ade80",
+                    fontFamily: "var(--font-press-start), monospace",
+                    fontSize: "10px",
+                    marginLeft: "8px",
+                    flexShrink: 0,
+                  }}
+                >
+                  {track.duration}
                 </span>
-                <span className="text-green-400 font-press-start text-xs ml-2">{track.duration}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Instructions */}
-        <div className="text-center mb-4">
-          <div className="text-green-400 font-press-start text-xs">Click play button or song title</div>
-          <div className="text-green-400 font-press-start text-xs">to start music</div>
+        <div style={{ textAlign: "center", marginBottom: "16px" }}>
+          <div style={{ color: "#4ade80", fontFamily: "var(--font-press-start), monospace", fontSize: "10px" }}>
+            Click play button or song title
+          </div>
+          <div style={{ color: "#4ade80", fontFamily: "var(--font-press-start), monospace", fontSize: "10px" }}>
+            to start music
+          </div>
         </div>
 
-        {/* Back Button - ✅ LANGSUNG KE GAMEBOY */}
+        {/* Back Button */}
         <button
           onClick={() => router.push("/?direct=true")}
-          className="w-full bg-green-500 hover:bg-green-600 text-white font-press-start text-xs py-3 px-4 rounded transition-colors"
+          style={{
+            width: "100%",
+            backgroundColor: "#22c55e",
+            color: "white",
+            fontFamily: "var(--font-press-start), monospace",
+            fontSize: "10px",
+            padding: "12px 16px",
+            borderRadius: "4px",
+            border: "none",
+            cursor: "pointer",
+          }}
         >
           SELANJUTNYA
         </button>

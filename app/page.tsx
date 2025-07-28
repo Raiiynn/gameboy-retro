@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, Suspense } from "react"
+import { useState, useEffect, useRef, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 
 // ✅ Komponen terpisah untuk handle search params
@@ -8,6 +8,11 @@ function GameBoyContent() {
   const searchParams = useSearchParams()
   const [isLoading, setIsLoading] = useState(true)
   const [progress, setProgress] = useState(0)
+  const [musicStarted, setMusicStarted] = useState(false)
+  const showGameBoy = !isLoading
+  const audioRef = useRef<HTMLAudioElement>(null)
+
+  const backgroundMusic = "/music/OnMelancholyHill.mp3"
 
   // ✅ Cek apakah ada parameter 'direct' untuk skip booting
   const skipBooting = searchParams.get("direct") === "true"
@@ -32,6 +37,53 @@ function GameBoyContent() {
 
     return () => clearInterval(interval)
   }, [skipBooting])
+
+  useEffect(() => {
+    if (showGameBoy && !musicStarted) {
+      const playBackgroundMusic = async () => {
+        const audio = audioRef.current
+        if (audio) {
+          try {
+            audio.volume = 0.3 // Set volume to 30%
+            audio.loop = true // Loop the background music
+            await audio.play()
+            setMusicStarted(true)
+            console.log("Background music started")
+          } catch (error) {
+            console.log("Autoplay blocked by browser:", error)
+            // Fallback: music will start on first user interaction
+          }
+        }
+      }
+
+      // Small delay to ensure Game Boy interface is fully loaded
+      const timer = setTimeout(playBackgroundMusic, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [showGameBoy, musicStarted])
+
+  // Handle user interaction to start music if autoplay was blocked
+  const handleUserInteraction = async () => {
+    if (showGameBoy && !musicStarted) {
+      const audio = audioRef.current
+      if (audio) {
+        try {
+          await audio.play()
+          setMusicStarted(true)
+        } catch (error) {
+          console.log("Could not start music:", error)
+        }
+      }
+    }
+  }
+
+  const handleNavigation = (path: string) => {
+    // Pause background music when navigating away
+    if (audioRef.current) {
+      audioRef.current.pause()
+    }
+    router.push(path)
+  }
 
   if (isLoading) {
     return (
@@ -155,11 +207,9 @@ function GameBoyContent() {
         </div>
       </div>
 
-      {/* Windows activation watermark */}
-      <div className="absolute bottom-4 right-4 text-white/50 text-xs">
-        <div>Activate Windows</div>
-        <div>Go to Settings to activate Windows.</div>
-      </div>
+      {/* Background Music Audio Element */}
+      <audio ref={audioRef} src={backgroundMusic} preload="auto" crossOrigin="anonymous" />
+      
     </div>
   )
 }
