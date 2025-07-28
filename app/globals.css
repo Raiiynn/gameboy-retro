@@ -5,7 +5,7 @@
 @layer base {
   * {
     box-sizing: border-box;
-    @apply border-border;
+    @apply border border-border;
   }
 
   body {
