@@ -72,28 +72,473 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   }
 
-  /* Retro Buttons */
-  .retro-button {
-    font-family: var(--font-press-start), monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    transition: all 0.1s ease;
-    border: 2px solid;
+  /* Game Boy Container - NEW */
+  .gameboy-container {
+    background: #000000;
+    border: 4px solid #ffd700;
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     position: relative;
+  }
+
+  /* Screen Header - NEW */
+  .screen-header {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .screen-title {
+    color: #00ff41;
+    font-size: 16px;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    letter-spacing: 2px;
+  }
+
+  /* Game Info Display (for Tetris) - NEW */
+  .game-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #ffff00;
+    font-size: 10px;
+  }
+
+  .score-display,
+  .level-display,
+  .lines-display {
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+  }
+
+  /* Main Screen Area - NEW */
+  .screen-area {
+    background: #2d3748;
+    border: 2px solid #4a5568;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    min-height: 300px;
+    position: relative;
+  }
+
+  /* Tetris Grid - NEW */
+  .tetris-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    gap: 1px;
+    background: #1a202c;
+    padding: 10px;
+    border-radius: 4px;
+    height: 280px;
+  }
+
+  .tetris-cell {
+    background: #2d3748;
+    border: 1px solid #4a5568;
+    border-radius: 1px;
+  }
+
+  .tetris-cell.filled {
+    background: #00ff41;
+    box-shadow: inset 0 0 3px rgba(0, 255, 65, 0.8);
+  }
+
+  /* Birthday Screen Styles - NEW */
+  .birthday-title {
+    color: #00ff41;
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+    z-index: 1;
+    position: relative;
+  }
+
+  .press-start-text {
+    color: #ffff00;
+    font-size: 10px;
+    text-shadow: 0 0 8px rgba(255, 255, 0, 0.7);
+    z-index: 1;
+    position: relative;
+  }
+
+  /* Music Player Styles - NEW */
+  .album-art-container {
+    background: #4a5568;
+    border: 2px solid #718096;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .album-art {
+    width: 100%;
+    height: 120px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .album-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+  }
+
+  .album-art-placeholder {
+    color: #a0aec0;
+    font-size: 12px;
+  }
+
+  .song-info {
+    text-align: center;
+  }
+
+  .song-title {
+    color: #00ff41;
+    font-size: 10px;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+  }
+
+  .song-artist {
+    color: #ffff00;
+    font-size: 8px;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+  }
+
+  .error-message {
+    color: #ff4444;
+    font-size: 8px;
+    margin-top: 5px;
+    text-shadow: 0 0 5px rgba(255, 68, 68, 0.5);
+  }
+
+  /* Progress Bar - NEW */
+  .progress-container {
+    margin-bottom: 15px;
+  }
+
+  .time-display {
+    display: flex;
+    justify-content: space-between;
+    color: #00ff41;
+    font-size: 8px;
+    margin-bottom: 5px;
+  }
+
+  .progress-bar {
+    background: #1a202c;
+    height: 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    background: #3182ce;
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.1s ease;
+    box-shadow: 0 0 8px rgba(49, 130, 206, 0.6);
+  }
+
+  /* Volume Control - NEW */
+  .volume-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    color: #00ff41;
+  }
+
+  .volume-slider {
+    flex: 1;
+    height: 4px;
+    background: #1a202c;
+    border-radius: 2px;
     cursor: pointer;
   }
 
-  .retro-button:hover {
+  .volume-text {
+    font-size: 8px;
+    color: #00ff41;
+  }
+
+  /* Control Buttons - NEW */
+  .controls-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .control-btn {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: var(--font-press-start), monospace;
+    font-size: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .control-btn:hover {
+    background: #2c5282;
     transform: translateY(-1px);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   }
 
-  .retro-button:active {
+  .control-btn:active {
     transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   }
 
-  /* D-Pad Styling */
+  .control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Rotate Buttons (for Tetris) - NEW */
+  .rotate-controls {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  .rotate-btn {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: var(--font-press-start), monospace;
+    font-size: 8px;
+    cursor: pointer;
+    min-width: 40px;
+  }
+
+  .rotate-btn:hover {
+    background: #2c5282;
+  }
+
+  /* Playlist Container - NEW */
+  .playlist-container {
+    background: #2d3748;
+    border: 2px solid #4a5568;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .playlist-header {
+    color: #ffff00;
+    font-size: 10px;
+    margin-bottom: 8px;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+  }
+
+  .playlist-content {
+    background: white;
+    border-radius: 4px;
+    padding: 8px;
+    height: 100px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ffff00 #333333;
+  }
+
+  .playlist-content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .playlist-content::-webkit-scrollbar-track {
+    background: #333333;
+    border-radius: 4px;
+  }
+
+  .playlist-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ffff00 0%, #ffcc00 50%, #ff9900 100%);
+    border-radius: 4px;
+    border: 1px solid #cc8800;
+  }
+
+  .playlist-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffff33 0%, #ffdd22 50%, #ffaa11 100%);
+  }
+
+  .playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+  }
+
+  .playlist-item:hover {
+    background: #f7fafc;
+  }
+
+  .playlist-item.active {
+    background: #e2e8f0;
+    font-weight: bold;
+  }
+
+  .playlist-thumbnail {
+    width: 24px;
+    height: 24px;
+    background: #cbd5e0;
+    border-radius: 2px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .playlist-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .playlist-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .playlist-title {
+    color: black;
+    font-size: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .playlist-duration {
+    color: #718096;
+    font-size: 8px;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+
+  /* Message Screen - NEW */
+  .message-container {
+    background: #2d3748;
+    border: 2px solid #4a5568;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    height: 250px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #00ff41 #1a1a1a;
+  }
+
+  .message-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .message-container::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+  }
+
+  .message-container::-webkit-scrollbar-thumb {
+    background: #00ff41;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+  }
+
+  .message-text {
+    color: #00ff41;
+    font-size: 10px;
+    line-height: 1.6;
+    text-shadow: 0 0 3px rgba(0, 255, 65, 0.3);
+    white-space: pre-wrap;
+  }
+
+  /* Action Buttons - NEW */
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .action-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-press-start), monospace;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .btn-green {
+    background: #48bb78;
+    color: white;
+    box-shadow: 0 4px 0 #38a169, 0 6px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-green:hover {
+    background: #4fd1c7;
+    transform: translateY(-1px);
+  }
+
+  .btn-green:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #38a169, 0 3px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-red {
+    background: #f56565;
+    color: white;
+    box-shadow: 0 4px 0 #e53e3e, 0 6px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-red:hover {
+    background: #fc8181;
+    transform: translateY(-1px);
+  }
+
+  .btn-red:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #e53e3e, 0 3px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Instructions - NEW */
+  .instructions {
+    background: #2d3748;
+    border: 2px solid #4a5568;
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .instructions-text {
+    color: #00ff41;
+    font-size: 8px;
+    text-shadow: 0 0 3px rgba(0, 255, 65, 0.3);
+  }
+
+  /* D-Pad Styling - NEW */
   .dpad {
     position: relative;
     width: 60px;
@@ -122,7 +567,7 @@
     border-radius: 2px;
   }
 
-  /* Action Buttons (A, B) */
+  /* Action Buttons (A, B) - NEW */
   .action-button {
     width: 40px;
     height: 40px;
@@ -158,36 +603,7 @@
     box-shadow: 0 4px 0 #cc3333, 0 6px 8px rgba(0, 0, 0, 0.3);
   }
 
-  /* Menu Buttons */
-  .menu-button-blue {
-    background: #4285f4;
-    color: white;
-    border-color: #3367d6;
-    box-shadow: 0 4px 0 #3367d6, 0 6px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .menu-button-red {
-    background: #ea4335;
-    color: white;
-    border-color: #d33b2c;
-    box-shadow: 0 4px 0 #d33b2c, 0 6px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .menu-button-purple {
-    background: #9c27b0;
-    color: white;
-    border-color: #7b1fa2;
-    box-shadow: 0 4px 0 #7b1fa2, 0 6px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .menu-button-green {
-    background: #34a853;
-    color: white;
-    border-color: #2d8f47;
-    box-shadow: 0 4px 0 #2d8f47, 0 6px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Control Buttons (SELECT, START) */
+  /* Control Buttons (SELECT, START) - NEW */
   .control-button {
     background: #666;
     color: white;
@@ -211,7 +627,7 @@
     box-shadow: 0 1px 0 #333, 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  /* Speaker Grille */
+  /* Speaker Grille - NEW */
   .speaker-grille {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -226,7 +642,7 @@
     border-radius: 50%;
   }
 
-  /* Power/Battery Indicators */
+  /* Power/Battery Indicators - NEW */
   .indicator {
     width: 8px;
     height: 8px;
@@ -240,7 +656,19 @@
     box-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
   }
 
-  /* Retro Text Effects */
+  /* Windows Activation Watermark - NEW */
+  .windows-watermark {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 10px;
+    text-align: right;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Retro Colors */
   .retro-text-green {
     color: #00ff41;
     text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
@@ -255,27 +683,38 @@
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
   }
 
-  /* Scrollbar Styling */
-  .retro-scroll::-webkit-scrollbar {
-    width: 8px;
+  /* Custom Scrollbar */
+  .retro-scroll-playlist {
+    scrollbar-width: thin;
+    scrollbar-color: #ffff00 #333333;
   }
 
-  .retro-scroll::-webkit-scrollbar-track {
-    background: #333;
-    border-radius: 4px;
+  .retro-scroll-playlist::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
   }
 
-  .retro-scroll::-webkit-scrollbar-thumb {
-    background: #666;
-    border-radius: 4px;
-    border: 1px solid #333;
+  .retro-scroll-playlist::-webkit-scrollbar-track {
+    background: #333333 !important;
+    border-radius: 5px !important;
+    border: 1px solid #555555 !important;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5) !important;
   }
 
-  .retro-scroll::-webkit-scrollbar-thumb:hover {
-    background: #777;
+  .retro-scroll-playlist::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ffff00 0%, #ffcc00 50%, #ff9900 100%) !important;
+    border-radius: 5px !important;
+    border: 1px solid #cc8800 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
   }
 
-  /* Animation for blinking elements */
+  .retro-scroll-playlist::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffff33 0%, #ffdd22 50%, #ffaa11 100%) !important;
+    box-shadow: 0 2px 6px rgba(255, 255, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    cursor: pointer !important;
+  }
+
+  /* Animations - NEW */
   @keyframes blink {
     0%,
     50% {
@@ -291,13 +730,44 @@
     animation: blink 1s infinite;
   }
 
-  /* Gradient backgrounds */
-  .bg-retro-purple {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  @keyframes glow {
+    0%,
+    100% {
+      text-shadow: 0 0 5px currentColor;
+    }
+    50% {
+      text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+    }
   }
 
-  .bg-retro-gameboy {
-    background: linear-gradient(145deg, #e8e8e8 0%, #d0d0d0 50%, #b8b8b8 100%);
+  .glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  /* Responsive Design - NEW */
+  @media (max-width: 480px) {
+    .gameboy-container {
+      max-width: 350px;
+      padding: 15px;
+    }
+
+    .screen-title {
+      font-size: 14px;
+    }
+
+    .birthday-title {
+      font-size: 16px;
+    }
+
+    .game-info {
+      font-size: 8px;
+    }
+
+    .control-btn,
+    .action-btn {
+      font-size: 8px;
+      padding: 8px 10px;
+    }
   }
 }
 
@@ -328,27 +798,9 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-
-    /* Custom Retro Colors */
-    --retro-green: #00ff41;
-    --retro-yellow: #ffff00;
-    --retro-blue: #4285f4;
-    --retro-red: #ea4335;
-    --retro-purple: #9c27b0;
-    --retro-dark: #001100;
-    --retro-gray: #333333;
-    --gameboy-green: #9bbc0f;
-    --gameboy-dark-green: #306230;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
     --font-press-start: "Press Start 2P";
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -374,13 +826,5 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
