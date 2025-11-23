@@ -4,7 +4,7 @@
 
 **GameBoy Retro** adalah sebuah proyek web eksperimental yang menghadirkan nostalgia antarmuka konsol klasik GameBoy ke dalam browser modern. Proyek ini menggabungkan desain retro pixel-art dengan teknologi web terkini.
 
-![GameBoy Preview](./public/preview.png)
+![GameBoy Preview](./public/gameboy.png)
 *(Catatan: Ganti path gambar di atas dengan screenshot asli proyek Anda)*
 
 ## ✨ Fitur Utama
