@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 GameBoy Retro Web
 
-## Getting Started
+![Project Status](https://img.shields.io/badge/Status-Active-success)
 
-First, run the development server:
+**GameBoy Retro** adalah sebuah proyek web eksperimental yang menghadirkan nostalgia antarmuka konsol klasik GameBoy ke dalam browser modern. Proyek ini menggabungkan desain retro pixel-art dengan teknologi web terkini.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![GameBoy Preview](./public/preview.png)
+*(Catatan: Ganti path gambar di atas dengan screenshot asli proyek Anda)*
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Fitur Utama
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* **Retro UI Design:** Antarmuka yang meniru fisik GameBoy klasik dengan detail CSS.
+* **Responsive Layout:** Tampilan yang menyesuaikan ukuran layar (Desktop & Mobile).
+* **Interactive Controls:** Tombol D-Pad, A, B, Start, dan Select yang dapat diklik/interaktif.
+* **Classic Color Palette:** Menggunakan skema warna hijau monokrom khas layar dot-matrix jadul.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+Proyek ini dibangun menggunakan teknologi berikut:
 
-To learn more about Next.js, take a look at the following resources:
+* ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) **HTML5** - Struktur semantik aplikasi.
+* ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) **CSS3** - Styling untuk efek retro, pixel art, dan animasi.
+* ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) **TypeScript** - Pengetikan statis untuk kode yang lebih aman dan terstruktur.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Cara Menjalankan (Local)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Ikuti langkah ini untuk menjalankan proyek di komputer Anda:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.  **Clone repository**
+    ```bash
+    git clone [https://github.com/Raiiynn/gameboy-retro.git](https://github.com/Raiiynn/gameboy-retro.git)
+    ```
+2.  **Masuk ke direktori**
+    ```bash
+    cd gameboy-retro
+    ```
+3.  **Install Dependencies** (Karena pakai TypeScript, biasanya perlu install modul)
+    ```bash
+    npm install
+    ```
+4.  **Jalankan Project**
+    ```bash
+    npm run dev
+    ```
