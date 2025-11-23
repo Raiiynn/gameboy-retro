@@ -520,7 +520,7 @@ const handleNavigation = (path: string) => {
             <div style={styles.powerDot}></div>
             <span style={styles.indicatorText}>POWER</span>
           </div>
-          <div style={styles.brandText}>BUAT ILA</div>
+          <div style={styles.brandText}>BUAT "Seseorang"</div>
           <div style={styles.indicator}>
             <div style={styles.powerDot}></div>
             <span style={styles.indicatorText}>BATTERY</span>

@@ -12,7 +12,7 @@ export default function MessagePage() {
 
   const messages = [
     {
-      title: "Hai Ila,",
+      title: "Hai Kamuu,",
       content: `Semangat Ujian nya!
 
 Besok itu kesempatanmu buat membuktikan seberapa jauh perjuangan dan kerja keras yang udah kamu lakukan.
@@ -23,7 +23,7 @@ Percayalah bahwa setiap lembar catatan yang kamu baca, setiap malam begadang (sa
       title: "Lanjutan...",
       content: `Malam ini, tidur yang cukup supaya pikiranmu segar n siap menghadapi tantangan. Bayangin aja kebanggaan dan kelegaan yang bakal kamu rasain ketika menyelesaikan seluruh soal dengan baik.
 
-      Semangat, Ilaa!!
+      Semangat, Kamuu!!
 
 Regards,
 Dapa`,
